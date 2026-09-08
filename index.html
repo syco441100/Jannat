@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Happy Birthday Jannat — Celebrating 18 September 2006</title>
+  
+  <!-- PWA & Mobile Meta Tags -->
+  <meta name="application-name" content="HB Jannat">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="HB Jannat">
+  <meta name="theme-color" content="#120a26">
+  <meta name="description" content="A luxury iPhone Glass Prism birthday celebration app for Jannat from Vince with accurate Pakistan time, countdown, cake and love letter.">
+  
+  <!-- App Icons -->
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png">
+  
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.webmanifest">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Ambient Animated Glass Backdrop -->
+  <div class="ambient-canvas-wrapper" aria-hidden="true">
+    <div class="aurora-mesh"></div>
+  </div>
+  <div class="noise-overlay" aria-hidden="true"></div>
+  <div class="sparkle-particles" id="sparkle-particles" aria-hidden="true"></div>
+
+  <!-- Fullscreen Balloon Swarm on Birthday -->
+  <div class="balloon-swarm-overlay" id="balloon-swarm-overlay" aria-hidden="true"></div>
+
+  <!-- Confetti Canvas -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Dynamic Island Header -->
+  <header class="dynamic-header-container">
+    <div class="dynamic-island">
+      <div class="island-left">
+        <div class="avatar-ring">
+          <img src="assets/icons/apple-touch-icon.png" alt="Cake Icon" class="avatar-img">
+        </div>
+        <div class="island-meta">
+          <span class="island-title">Jannat's Day ✨</span>
+          <span class="island-sub">
+            <span class="live-pulse-dot"></span>
+            <span id="island-pkt-time">--:--:-- PKT</span>
+          </span>
+        </div>
+      </div>
+      <div class="island-right">
+        <button id="reminder-toggle-btn" class="glass-pill-btn" title="Enable 12:00 AM Midnight Reminder">
+          🔔 <span>Midnight Reminder</span>
+        </button>
+        <button id="preview-mode-btn" class="glass-pill-btn" title="Toggle Sept 18 Grand Celebration Mode">
+          🎉 <span>Test 18 Sept Mode</span>
+        </button>
+        <button id="music-toggle-btn" class="glass-pill-btn" title="Toggle Birthday Music">
+          🎵 <span>Play Melody</span>
+        </button>
+        <button id="header-install-btn" class="glass-pill-btn primary" title="Install to Mobile">
+          📲 <span>Install App</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main App Content -->
+  <main class="app-container">
+
+    <!-- Hero Section -->
+    <section class="glass-card hero-section">
+      <div class="vince-badge">
+        <span>A Special Tribute from</span>
+        <strong>Vince</strong>
+        <span class="vince-heart">❤️</span>
+      </div>
+      
+      <h1 class="hero-main-title">Happy Birthday Jannat</h1>
+      <p class="hero-sub-title">
+        Celebrating an extraordinary soul, radiant smile, and pure grace.
+      </p>
+
+      <div class="bday-highlight-pill">
+        <span>👑</span>
+        <span>Born: 18 September 2006</span>
+        <span>🌸</span>
+      </div>
+    </section>
+
+    <!-- Pakistan Time & Next Birthday Countdown Grid -->
+    <section class="clock-grid">
+      
+      <!-- Card 1: Accurate Pakistan Standard Time -->
+      <div class="glass-card">
+        <div class="pkt-card-content">
+          <div class="section-label">
+            <span>Pakistan Standard Time</span>
+            <span class="status-badge-live">
+              <span class="live-pulse-dot"></span> 100% ACCURATE
+            </span>
+          </div>
+
+          <div>
+            <div class="pkt-time-display">
+              <span id="pkt-time">--:--:--</span>
+              <span id="pkt-period" class="pkt-period">--</span>
+            </div>
+            <div id="pkt-date" class="pkt-date-display" style="margin-top: 6px;">Loading Date...</div>
+          </div>
+
+          <div class="pkt-location-info">
+            <span>📍</span>
+            <span>Timezone: <strong>Asia/Karachi (PKT UTC+5)</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Next Birthday Countdown -->
+      <div class="glass-card">
+        <div class="countdown-container">
+          <div class="section-label">
+            <span>Countdown to 18 September</span>
+            <span style="color: var(--gold);">🎉 Celebration</span>
+          </div>
+
+          <!-- Active Birthday Banner (shown on Sept 18) -->
+          <div id="celebration-banner" class="celebration-banner">
+            <h3>🎉 TODAY IS JANNAT'S BIRTHDAY! 🎉</h3>
+            <p style="color: #fff; font-size: 0.9rem;">Wishing you endless light, happiness, and unforgettable moments!</p>
+          </div>
+
+          <!-- Digits Grid (Days, Hours, Mins, Secs) -->
+          <div class="countdown-digits-grid" id="countdown-digits-grid">
+            <div class="countdown-box">
+              <div id="cd-days" class="countdown-val">00</div>
+              <div class="countdown-lbl">Days</div>
+            </div>
+            <div class="countdown-box">
+              <div id="cd-hours" class="countdown-val">00</div>
+              <div class="countdown-lbl">Hours</div>
+            </div>
+            <div class="countdown-box">
+              <div id="cd-mins" class="countdown-val">00</div>
+              <div class="countdown-lbl">Mins</div>
+            </div>
+            <div class="countdown-box">
+              <div id="cd-secs" class="countdown-val">00</div>
+              <div class="countdown-lbl">Secs</div>
+            </div>
+          </div>
+
+          <!-- Milestones Tracker since 18 Sept 2006 -->
+          <div class="milestones-wrapper" id="milestones-wrapper">
+            <div class="milestone-item">
+              <span id="age-years" class="milestone-num">--</span>
+              <span class="milestone-text">Years of Joy</span>
+            </div>
+            <div class="milestone-item">
+              <span id="age-days" class="milestone-num">--</span>
+              <span class="milestone-text">Days on Earth</span>
+            </div>
+            <div class="milestone-item">
+              <span id="age-hours" class="milestone-num">--</span>
+              <span class="milestone-text">Hours of Light</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Interactive Birthday Cake & Candles -->
+    <section class="glass-card cake-section">
+      <div class="section-label" style="width: 100%; justify-content: center; margin-bottom: 8px;">
+        <span>✨ Interactive Birthday Cake ✨</span>
+      </div>
+      <h2 style="font-size: 1.5rem; font-weight: 800; color: #fff; margin-bottom: 4px;">Make a Birthday Wish</h2>
+      <p style="color: var(--text-muted); font-size: 0.85rem; max-width: 440px;">
+        Close your eyes, hold your dearest wish in your heart, and blow out the candle!
+      </p>
+
+      <!-- 3D Frosted Glass Cake Stage -->
+      <div class="cake-stage">
+        <div class="pedestal"></div>
+        <div class="pedestal-leg"></div>
+        <div class="cake-tier-bottom">
+          <div class="cake-frosting-drip"></div>
+        </div>
+        <div class="cake-tier-top">
+          <div class="cake-frosting-drip"></div>
+        </div>
+        <div class="cake-candle" id="cake-candle">
+          <div class="candle-flame" id="candle-flame"></div>
+          <div class="smoke-particle"></div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="cake-actions">
+        <button id="blow-candle-btn" class="blow-btn">
+          <span>💨</span>
+          <span>Blow Out Candle</span>
+        </button>
+        <button id="relight-candle-btn" class="glass-pill-btn primary" style="display: none; padding: 12px 24px; font-size: 0.95rem;">
+          <span>🕯️</span>
+          <span>Relight Candle</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Letter From Vince (Wax Sealed Envelope) -->
+    <section class="glass-card letter-section">
+      <div class="section-label" style="margin-bottom: 12px;">
+        <span>Private & Personal</span>
+        <span>💌 For Jannat</span>
+      </div>
+
+      <h2 style="font-size: 1.6rem; font-weight: 800; color: #ffeaa7; margin-bottom: 6px;">
+        A Letter From Vince
+      </h2>
+      <p style="color: var(--text-secondary); font-size: 0.9rem; max-width: 480px;">
+        A handwritten thought sealed with warmth and heartfelt wishes. Tap the wax seal to open.
+      </p>
+
+      <!-- 3D Wax Seal Envelope -->
+      <div class="envelope-wrapper" id="vince-envelope">
+        <div class="envelope-body">
+          <div class="envelope-fold-left"></div>
+          <div class="envelope-fold-right"></div>
+          <div class="envelope-fold-bottom"></div>
+          <div class="wax-seal">
+            <span class="wax-seal-monogram">V</span>
+          </div>
+      </div>
+
+      <span class="wax-seal-tag">👆 Tap envelope to unseal the letter</span>
+    </section>
+
+    <!-- Robotic Voice Birthday Wishes -->
+    <section class="glass-card robotic-voice-card">
+      <div class="section-label" style="justify-content: center;">
+        <span>🤖 AI Voice Birthday Greeting 🤖</span>
+      </div>
+      <h3 style="font-size: 1.35rem; font-weight: 800; color: #fff;">Spoken Birthday Tribute for Jannat</h3>
+      <p style="color: var(--text-muted); font-size: 0.85rem; max-width: 480px;">
+        Listen to the robotic voice recite heartfelt birthday wishes composed especially by Vince.
+      </p>
+
+      <!-- Audio Visualizer Bars -->
+      <div class="voice-visualizer" id="voice-visualizer">
+        <div class="voice-bar"></div>
+        <div class="voice-bar"></div>
+        <div class="voice-bar"></div>
+        <div class="voice-bar"></div>
+        <div class="voice-bar"></div>
+        <div class="voice-bar"></div>
+        <div class="voice-bar"></div>
+        <div class="voice-bar"></div>
+      </div>
+
+      <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+        <button id="speak-wishes-btn" class="glass-pill-btn primary" style="padding: 12px 24px; font-size: 0.95rem;">
+          🎙️ <span>Hear Robotic Voice Wishes</span>
+        </button>
+        <button id="stop-speech-btn" class="glass-pill-btn" style="padding: 12px 20px; font-size: 0.9rem; display: none;">
+          ⏹️ <span>Stop</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Interactive Calendar Widget -->
+    <section class="glass-card calendar-card" id="calendar-section">
+      <div class="calendar-header">
+        <div class="calendar-month-title" id="calendar-month-title">September</div>
+        <div class="cal-nav-group">
+          <button id="cal-prev" class="cal-nav-btn" aria-label="Previous Month">❮</button>
+          <button id="cal-next" class="cal-nav-btn" aria-label="Next Month">❯</button>
+        </div>
+      </div>
+
+      <div class="calendar-weekdays">
+        <div>Sun</div>
+        <div>Mon</div>
+        <div>Tue</div>
+        <div>Wed</div>
+        <div>Thu</div>
+        <div>Fri</div>
+        <div>Sat</div>
+      </div>
+
+      <div class="calendar-days-grid" id="calendar-days-grid">
+        <!-- Generated by JavaScript -->
+      </div>
+    </section>
+
+    <!-- Interactive Balloons & Affirmations -->
+    <section class="glass-card balloons-section">
+      <div class="section-label" style="justify-content: center; margin-bottom: 8px;">
+        <span>🎈 Birthday Balloon Pop 🎈</span>
+      </div>
+      <h3 style="font-size: 1.3rem; font-weight: 750; color: #fff;">Tap a Balloon to Pop & Reveal a Message</h3>
+      <p style="color: var(--text-muted); font-size: 0.82rem; margin-top: 4px;">
+        Each balloon carries a special affirmation for your birthday!
+      </p>
+
+      <div class="balloons-container">
+        <div class="floating-balloon balloon-pink" title="Tap to pop!"></div>
+        <div class="floating-balloon balloon-gold" title="Tap to pop!"></div>
+        <div class="floating-balloon balloon-blue" title="Tap to pop!"></div>
+        <div class="floating-balloon balloon-purple" title="Tap to pop!"></div>
+        <div class="floating-balloon balloon-rose" title="Tap to pop!"></div>
+      </div>
+
+      <!-- Guestbook / Wish jar -->
+      <div style="margin-top: 24px;">
+        <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 10px;">
+          Leave a sweet memory or birthday note in Jannat's memory jar:
+        </p>
+        <div class="wish-input-wrapper">
+          <input type="text" id="wish-input" class="glass-input" placeholder="Write a wish for Jannat..." maxlength="120">
+          <button id="send-wish-btn" class="glass-pill-btn primary" style="padding: 10px 20px;">Send ✨</button>
+        </div>
+        <div id="wishes-list" style="margin-top: 14px; display: flex; flex-direction: column; gap: 8px;"></div>
+      </div>
+    </section>
+
+    <!-- PWA Install / Mobile Download ("pwd download") Section -->
+    <section class="glass-card install-card">
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <div class="install-icon-badge">
+          <img src="assets/icons/apple-touch-icon.png" alt="App Icon" class="install-icon-img">
+        </div>
+        <div class="install-info">
+          <h4>Download on Mobile (PWA)</h4>
+          <p>Install Happy Birthday Jannat directly to your iPhone or Android home screen for smooth full-screen glass animations and offline access.</p>
+        </div>
+      </div>
+
+      <button id="install-pwa-btn" class="glass-pill-btn primary" style="padding: 12px 26px; font-size: 0.95rem; white-space: nowrap;">
+        📲 <span>Download / Add to Phone</span>
+      </button>
+    </section>
+
+  </main>
+
+  <!-- Full Letter Modal (From Vince) -->
+  <div class="modal-backdrop" id="letter-modal-backdrop">
+    <div class="letter-modal">
+      <button class="modal-close-btn" id="close-letter-btn" aria-label="Close Letter">✕</button>
+      
+      <div class="letter-heading">Dearest Jannat,</div>
+      
+      <div class="letter-body">
+        <p>
+          On this very special day—<strong>18 September</strong>—the world was gifted someone uniquely wonderful, thoughtful, and deeply special.
+        </p>
+        <p>
+          Watching you step through life with your kindness, elegance, and genuine smile is a constant reminder of how much light one person can bring into the lives around them. You have a heart of gold, a spirit full of laughter, and dreams that are waiting to unfold in the most breathtaking ways.
+        </p>
+        <p>
+          I hope this new chapter of your journey brings you endless happiness, moments that take your breath away, genuine peace, and the courage to pursue every ambition you hold dear. Whatever path you walk, remember how deeply valued and admired you are.
+        </p>
+        <p>
+          Happy Birthday, Jannat! May every single candle on your cake turn into a realized dream, and may your days always be as bright and beautiful as your smile.
+        </p>
+      </div>
+
+      <div class="letter-signature">
+        <span class="signature-vince">With all my love & warmest wishes,</span>
+        <span class="signature-vince" style="font-size: 1.8rem; margin-top: 4px;">— Vince ❤️</span>
+        <span class="signature-date">18 September 2006 • Celebrating You Always</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PWA Install Guide Modal (iOS Safari & Android) -->
+  <div class="modal-backdrop" id="pwa-modal-backdrop">
+    <div class="letter-modal" style="max-width: 520px;">
+      <button class="modal-close-btn" id="close-pwa-modal-btn" aria-label="Close Modal">✕</button>
+      
+      <div style="text-align: center; margin-bottom: 20px;">
+        <div class="install-icon-badge" style="margin: 0 auto 12px;">
+          <img src="assets/icons/apple-touch-icon.png" alt="App Icon" class="install-icon-img">
+        </div>
+        <h3 style="font-size: 1.4rem; font-weight: 800; color: #fff;">Install on Your Mobile</h3>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">
+          Enjoy the full-screen iPhone Glass Prism experience directly on your device!
+        </p>
+      </div>
+
+      <div class="pwa-instruction-steps">
+        <div class="pwa-step-item">
+          <div class="step-num">1</div>
+          <div class="step-text">
+            On Safari (iPhone) or Chrome (Android), tap the <strong>Share</strong> button <span style="font-size: 1.1rem;">⎋</span> or <strong>Menu</strong> (⋮) icon.
+          </div>
+        </div>
+
+        <div class="pwa-step-item">
+          <div class="step-num">2</div>
+          <div class="step-text">
+            Scroll through the options and tap <strong>"Add to Home Screen"</strong> <span style="font-size: 1.1rem;">➕</span>.
+          </div>
+        </div>
+
+        <div class="pwa-step-item">
+          <div class="step-num">3</div>
+          <div class="step-text">
+            Tap <strong>"Add"</strong> in the top right corner. The app icon will now appear on your home screen just like a native app!
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 24px;">
+        <button class="glass-pill-btn primary" onclick="document.getElementById('pwa-modal-backdrop').classList.remove('open')" style="padding: 10px 32px;">
+          Got It! ✨
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container">
+    <div id="toast" class="toast">Welcome to Jannat's Birthday Celebration! ✨</div>
+  </div>
+
+  <!-- Main JavaScript Engine -->
+  <script src="app.js"></script>
+</body>
+</html>
