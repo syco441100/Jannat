@@ -1,18 +1,19 @@
 // Service Worker for Happy Birthday Jannat PWA
-const CACHE_NAME = 'hb-jannat-v1.0.0';
+const CACHE_NAME = 'hb-jannat-v1.1.0';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
   './styles.css',
   './app.js',
   './manifest.webmanifest',
-  './assets/icons/icon-192.png',
-  './assets/icons/icon-512.png',
-  './assets/icons/icon-maskable-512.png',
-  './assets/icons/apple-touch-icon.png',
-  './assets/icons/favicon-32x32.png',
-  './assets/icons/favicon-16x16.png',
-  './assets/icons/favicon.svg'
+  './manifest.json',
+  './icon-192.png',
+  './icon-512.png',
+  './icon-maskable-512.png',
+  './apple-touch-icon.png',
+  './favicon-32x32.png',
+  './favicon-16x16.png',
+  './favicon.svg'
 ];
 
 self.addEventListener('install', (event) => {
@@ -43,7 +44,6 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
       if (cachedResponse) {
-        // Fetch in background to update cache (stale-while-revalidate)
         fetch(event.request).then((networkResponse) => {
           if (networkResponse && networkResponse.status === 200) {
             caches.open(CACHE_NAME).then((cache) => {
@@ -83,4 +83,3 @@ self.addEventListener('notificationclick', (event) => {
     })
   );
 });
-

@@ -4,11 +4,13 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Service Worker Registration
-  if ('serviceWorker' in navigator) {
+  // Service Worker Registration (Supported on HTTP/HTTPS/localhost)
+  if ('serviceWorker' in navigator && (window.location.protocol.startsWith('http') || window.location.hostname === 'localhost')) {
     navigator.serviceWorker.register('./sw.js')
       .then((reg) => console.log('PWA Service Worker registered:', reg.scope))
-      .catch((err) => console.warn('PWA Service Worker registration failed:', err));
+      .catch((err) => console.warn('PWA Service Worker registration notice:', err));
+  } else if (window.location.protocol === 'file:') {
+    console.info('Running via file:// protocol. PWA install is enabled via start.bat or HTTP server.');
   }
 
   initSparkles();
@@ -410,7 +412,18 @@ function initPwaInstall() {
   const installModal = document.getElementById('pwa-modal-backdrop');
   const closeInstallBtn = document.getElementById('close-pwa-modal-btn');
   const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  const isAndroid = /Android/.test(navigator.userAgent);
   const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+  // Global tab switcher for install modal
+  window.switchInstallTab = function(device) {
+    ['pc', 'ios', 'android'].forEach(d => {
+      const btn = document.getElementById(`tab-btn-${d}`);
+      const content = document.getElementById(`install-tab-content-${d}`);
+      if (btn) btn.classList.toggle('active', d === device);
+      if (content) content.style.display = (d === device) ? 'block' : 'none';
+    });
+  };
 
   window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
@@ -433,7 +446,14 @@ function initPwaInstall() {
         deferredInstallPrompt = null;
       });
     } else {
-      // Show iOS / Universal instructions modal
+      // Auto-select the matching tab based on user's current device
+      if (isIos) {
+        window.switchInstallTab('ios');
+      } else if (isAndroid) {
+        window.switchInstallTab('android');
+      } else {
+        window.switchInstallTab('pc');
+      }
       if (installModal) installModal.classList.add('open');
     }
   }
@@ -790,8 +810,8 @@ function initDailyNotifications() {
 
     const options = {
       body: body,
-      icon: 'assets/icons/icon-192.png',
-      badge: 'assets/icons/favicon-32x32.png',
+      icon: 'icon-192.png',
+      badge: 'favicon-32x32.png',
       vibrate: [200, 100, 200, 100, 300],
       tag: 'jannat-bday-reminder',
       renotify: true

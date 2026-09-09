@@ -14,13 +14,14 @@
   <meta name="description" content="A luxury iPhone Glass Prism birthday celebration app for Jannat from Vince with accurate Pakistan time, countdown, cake and love letter.">
   
   <!-- App Icons -->
-  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   
   <!-- PWA Manifest -->
   <link rel="manifest" href="manifest.webmanifest">
+  <link rel="manifest" href="manifest.json">
   
   <!-- Stylesheet -->
   <link rel="stylesheet" href="styles.css">
@@ -45,7 +46,7 @@
     <div class="dynamic-island">
       <div class="island-left">
         <div class="avatar-ring">
-          <img src="assets/icons/apple-touch-icon.png" alt="Cake Icon" class="avatar-img">
+          <img src="apple-touch-icon.png" alt="Cake Icon" class="avatar-img">
         </div>
         <div class="island-meta">
           <span class="island-title">Jannat's Day ✨</span>
@@ -333,20 +334,20 @@
       </div>
     </section>
 
-    <!-- PWA Install / Mobile Download ("pwd download") Section -->
+    <!-- PWA Install / Mobile & Computer Download Section -->
     <section class="glass-card install-card">
       <div style="display: flex; align-items: center; gap: 16px;">
         <div class="install-icon-badge">
-          <img src="assets/icons/apple-touch-icon.png" alt="App Icon" class="install-icon-img">
+          <img src="apple-touch-icon.png" alt="App Icon" class="install-icon-img">
         </div>
         <div class="install-info">
-          <h4>Download on Mobile (PWA)</h4>
-          <p>Install Happy Birthday Jannat directly to your iPhone or Android home screen for smooth full-screen glass animations and offline access.</p>
+          <h4>Download & Install App (Mobile & Computer)</h4>
+          <p>Install Happy Birthday Jannat directly to your iPhone, Android, or PC desktop for smooth full-screen glass animations and 100% offline access.</p>
         </div>
       </div>
 
       <button id="install-pwa-btn" class="glass-pill-btn primary" style="padding: 12px 26px; font-size: 0.95rem; white-space: nowrap;">
-        📲 <span>Download / Add to Phone</span>
+        📲 <span>Install on Mobile / PC</span>
       </button>
     </section>
 
@@ -382,45 +383,105 @@
     </div>
   </div>
 
-  <!-- PWA Install Guide Modal (iOS Safari & Android) -->
+  <!-- PWA Install Guide Modal (Computer, iOS Safari & Android) -->
   <div class="modal-backdrop" id="pwa-modal-backdrop">
-    <div class="letter-modal" style="max-width: 520px;">
+    <div class="letter-modal" style="max-width: 560px;">
       <button class="modal-close-btn" id="close-pwa-modal-btn" aria-label="Close Modal">✕</button>
       
-      <div style="text-align: center; margin-bottom: 20px;">
+      <div style="text-align: center; margin-bottom: 16px;">
         <div class="install-icon-badge" style="margin: 0 auto 12px;">
-          <img src="assets/icons/apple-touch-icon.png" alt="App Icon" class="install-icon-img">
+          <img src="apple-touch-icon.png" alt="App Icon" class="install-icon-img">
         </div>
-        <h3 style="font-size: 1.4rem; font-weight: 800; color: #fff;">Install on Your Mobile</h3>
+        <h3 style="font-size: 1.4rem; font-weight: 800; color: #fff;">Install on Mobile or Computer</h3>
         <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">
           Enjoy the full-screen iPhone Glass Prism experience directly on your device!
         </p>
       </div>
 
-      <div class="pwa-instruction-steps">
-        <div class="pwa-step-item">
-          <div class="step-num">1</div>
-          <div class="step-text">
-            On Safari (iPhone) or Chrome (Android), tap the <strong>Share</strong> button <span style="font-size: 1.1rem;">⎋</span> or <strong>Menu</strong> (⋮) icon.
+      <!-- Device Tabs Navigation -->
+      <div style="display: flex; gap: 8px; justify-content: center; margin-bottom: 18px; flex-wrap: wrap;">
+        <button type="button" class="install-tab-btn active" id="tab-btn-pc" onclick="switchInstallTab('pc')">💻 Computer (PC/Mac)</button>
+        <button type="button" class="install-tab-btn" id="tab-btn-ios" onclick="switchInstallTab('ios')">📱 iPhone (iOS)</button>
+        <button type="button" class="install-tab-btn" id="tab-btn-android" onclick="switchInstallTab('android')">🤖 Android</button>
+      </div>
+
+      <!-- Tab 1: Computer (PC/Mac) -->
+      <div id="install-tab-content-pc" class="install-tab-content">
+        <div class="pwa-instruction-steps">
+          <div class="pwa-step-item">
+            <div class="step-num">1</div>
+            <div class="step-text">
+              In <strong>Google Chrome</strong> or <strong>Microsoft Edge</strong>, look at the right side of the address bar at the top.
+            </div>
+          </div>
+          <div class="pwa-step-item">
+            <div class="step-num">2</div>
+            <div class="step-text">
+              Click the <strong>Install App</strong> icon (🖥️ ⬇️ or ⊕) on the address bar, or click Menu (⋮) → <strong>"Save and share"</strong> → <strong>"Install Happy Birthday Jannat..."</strong>.
+            </div>
+          </div>
+          <div class="pwa-step-item">
+            <div class="step-num">3</div>
+            <div class="step-text">
+              Click <strong>"Install"</strong>! It will open as a dedicated, standalone borderless desktop app with its own taskbar icon.
+            </div>
           </div>
         </div>
 
-        <div class="pwa-step-item">
-          <div class="step-num">2</div>
-          <div class="step-text">
-            Scroll through the options and tap <strong>"Add to Home Screen"</strong> <span style="font-size: 1.1rem;">➕</span>.
-          </div>
+        <div style="margin-top: 14px; padding: 12px 14px; background: rgba(247, 206, 104, 0.12); border: 1px solid rgba(247, 206, 104, 0.35); border-radius: 12px; font-size: 0.82rem; color: #ffeaa7; text-align: left;">
+          💡 <strong>Tip for Windows Users:</strong> You can also double-click <strong>start.bat</strong> in the project folder to instantly launch the standalone app window!
         </div>
+      </div>
 
-        <div class="pwa-step-item">
-          <div class="step-num">3</div>
-          <div class="step-text">
-            Tap <strong>"Add"</strong> in the top right corner. The app icon will now appear on your home screen just like a native app!
+      <!-- Tab 2: iPhone (iOS Safari) -->
+      <div id="install-tab-content-ios" class="install-tab-content" style="display: none;">
+        <div class="pwa-instruction-steps">
+          <div class="pwa-step-item">
+            <div class="step-num">1</div>
+            <div class="step-text">
+              Open this website in <strong>Safari</strong> on your iPhone or iPad. Tap the <strong>Share</strong> button <span style="font-size: 1.1rem;">⎋</span> at the bottom of the screen.
+            </div>
+          </div>
+          <div class="pwa-step-item">
+            <div class="step-num">2</div>
+            <div class="step-text">
+              Scroll down the share options and tap <strong>"Add to Home Screen"</strong> <span style="font-size: 1.1rem;">➕</span>.
+            </div>
+          </div>
+          <div class="pwa-step-item">
+            <div class="step-num">3</div>
+            <div class="step-text">
+              Tap <strong>"Add"</strong> in the top right corner. The luxury cake icon will appear on your iPhone home screen!
+            </div>
           </div>
         </div>
       </div>
 
-      <div style="text-align: center; margin-top: 24px;">
+      <!-- Tab 3: Android (Chrome) -->
+      <div id="install-tab-content-android" class="install-tab-content" style="display: none;">
+        <div class="pwa-instruction-steps">
+          <div class="pwa-step-item">
+            <div class="step-num">1</div>
+            <div class="step-text">
+              In <strong>Chrome</strong> on Android, tap the three dots <strong>Menu (⋮)</strong> in the top-right corner.
+            </div>
+          </div>
+          <div class="pwa-step-item">
+            <div class="step-num">2</div>
+            <div class="step-text">
+              Tap <strong>"Install app"</strong> or <strong>"Add to Home screen"</strong> <span style="font-size: 1.1rem;">📲</span>.
+            </div>
+          </div>
+          <div class="pwa-step-item">
+            <div class="step-num">3</div>
+            <div class="step-text">
+              Tap <strong>"Install"</strong> to confirm. The app will be downloaded directly to your phone!
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 22px;">
         <button class="glass-pill-btn primary" onclick="document.getElementById('pwa-modal-backdrop').classList.remove('open')" style="padding: 10px 32px;">
           Got It! ✨
         </button>
